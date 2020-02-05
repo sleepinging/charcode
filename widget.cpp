@@ -25,12 +25,9 @@ void Widget::on_btn_encode_clicked()
 {
     auto str1=ui->te_org->toPlainText();
 //    QString str1="ABC中国";
-    auto *utf8 = QTextCodec::codecForName("UTF-8");
+    auto utf8 = QTextCodec::codecForName("UTF-8");
     auto strUnicode= utf8->toUnicode(str1.toUtf8().data());
-    auto cs=ui->cb_cs->currentText().toUtf8();
-    const char* pcs=(const char*)cs.data();
-//    qDebug()<<pcs;
-    auto *qtc = QTextCodec::codecForName(pcs);
+    auto qtc = get_select_charset();
     auto bs=qtc->fromUnicode(strUnicode);
     //HEX
     {
@@ -46,7 +43,7 @@ void Widget::on_btn_encode_clicked()
     ui->te_url->setText(bs.toPercentEncoding());
     ui->te_base64->setText(bs.toBase64());
     //grep
-    ui->te_grep->setText(bs.toHex(' ').toUpper().split(' ').join("\\x"));
+    ui->te_grep->setText("\\x"+bs.toHex(' ').toUpper().split(' ').join("\\x"));
     //转unicode显示
     {
         QString us;
@@ -89,21 +86,24 @@ void Widget::on_btn_hex_clicked()
         }
         bs.append(num);
     }
-    ui->te_org->setText(bs);
+    auto tc=get_select_charset();
+    ui->te_org->setText(tc->toUnicode(bs));
 }
 
 void Widget::on_btn_url_clicked()
 {
     auto t=ui->te_url->toPlainText();
     auto bs=QByteArray::fromPercentEncoding(t.toLatin1());
-    ui->te_org->setText(bs);
+    auto tc=get_select_charset();
+    ui->te_org->setText(tc->toUnicode(bs));
 }
 
 void Widget::on_btn_base64_clicked()
 {
     auto t=ui->te_base64->toPlainText();
     auto bs=QByteArray::fromBase64(t.toLatin1());
-    ui->te_org->setText(bs);
+    auto tc=get_select_charset();
+    ui->te_org->setText(tc->toUnicode(bs));
 }
 
 void Widget::on_btn_uni_clicked()
@@ -117,13 +117,14 @@ void Widget::on_btn_uni_clicked()
         bb[i+1]=bb[i];
         bb[i]=t;
     }
-    ui->te_org->setText(bb);
+    auto tc=get_select_charset();
+    ui->te_org->setText(tc->toUnicode(bb));
 }
 
 void Widget::on_btn_grep_clicked()
 {
     auto t=ui->te_grep->toPlainText();
-    auto hexs=t.split("\\x");
+    auto hexs=t.split("\\x", QString::SkipEmptyParts);
     QByteArray bs;
     bool ok=false;
     int num=0;
@@ -135,7 +136,8 @@ void Widget::on_btn_grep_clicked()
         }
         bs.append(num);
     }
-    ui->te_org->setText(bs);
+    auto tc=get_select_charset();
+    ui->te_org->setText(tc->toUnicode(bs));
 }
 
 void Widget::on_cb_cl_stateChanged(int arg1)
@@ -149,5 +151,14 @@ void Widget::on_cb_cl_stateChanged(int arg1)
         t=t.replace(" ",",0x");
         t="{0x"+t+"}";
     }
-    ui->te_hex->setText(t);
+    auto tc=get_select_charset();
+    ui->te_hex->setText(tc->toUnicode(t.toLatin1()));
+}
+
+QTextCodec* Widget::get_select_charset()
+{
+    auto cs=ui->cb_cs->currentText().toUtf8();
+    auto pcs=static_cast<const char*>(cs.data());
+//    qDebug()<<pcs;
+    return QTextCodec::codecForName(pcs);
 }

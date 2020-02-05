@@ -29,7 +29,8 @@ private slots:
     void on_btn_grep_clicked();
 
     void on_cb_cl_stateChanged(int arg1);
-
+private:
+    QTextCodec* get_select_charset();
 private:
     Ui::Widget *ui;
 };
