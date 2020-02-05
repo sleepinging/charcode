@@ -5,9 +5,6 @@
 #include <QTextCodec>
 #include <QByteArray>
 #include <QMessageBox>
-#include <QtEndian>
-
-#include <QTimer>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -17,13 +14,6 @@ Widget::Widget(QWidget *parent)
     for(const auto& a:QTextCodec::availableCodecs()){
         ui->cb_cs->addItem(QString(a));
     }
-    static QTimer t;
-    connect(&t,&QTimer::timeout,[=]{
-        QMessageBox::critical(this,"滑稽时间到","滑稽树上滑稽果\n滑稽树下你和我");
-        QApplication::exit(0);
-    });
-    t.setInterval(1000*60*30);
-    t.start();
 }
 
 Widget::~Widget()
@@ -42,7 +32,17 @@ void Widget::on_btn_encode_clicked()
 //    qDebug()<<pcs;
     auto *qtc = QTextCodec::codecForName(pcs);
     auto bs=qtc->fromUnicode(strUnicode);
-    ui->te_hex->setText(bs.toHex(' ').toUpper());
+    //HEX
+    {
+        if(!ui->cb_cl->isChecked()){
+            ui->te_hex->setText(bs.toHex(' ').toUpper());
+        }else{
+            auto t=bs.toHex(' ').toUpper().replace(" ",",0x");
+            t="{0x"+t+"}";
+            ui->te_hex->setText(t);
+        }
+    }
+
     ui->te_url->setText(bs.toPercentEncoding());
     ui->te_base64->setText(bs.toBase64());
     //grep
@@ -54,7 +54,7 @@ void Widget::on_btn_encode_clicked()
         if(bb.size()%2!=0){
             bb.append('\0');
         }
-        //UCS-2大小端转化(辣鸡windows)
+        //UTF-16大小端转化(辣鸡windows)
         for(int i=0;i<bb.size();i+=2){
             auto t=bb.at(i+1);
             bb[i+1]=bb[i];
@@ -74,6 +74,9 @@ void Widget::on_btn_encode_clicked()
 void Widget::on_btn_hex_clicked()
 {
     auto t=ui->te_hex->toPlainText();
+    if(ui->cb_cl->isChecked()){
+        t=t.replace("{","").replace("}","").replace(",0x"," ").replace("0x","");
+    }
     auto hexs=t.split(" ");
     QByteArray bs;
     bool ok=false;
@@ -108,7 +111,7 @@ void Widget::on_btn_uni_clicked()
     auto t=ui->te_uni->toPlainText();
     t=t.replace("\\u","");
     auto bb=QByteArray::fromHex(t.toLatin1());
-    //UCS-2大小端转化(辣鸡windows)
+    //UTF-16大小端转化(辣鸡windows)
     for(int i=0;i<bb.size();i+=2){
         auto t=bb.at(i+1);
         bb[i+1]=bb[i];
@@ -133,4 +136,18 @@ void Widget::on_btn_grep_clicked()
         bs.append(num);
     }
     ui->te_org->setText(bs);
+}
+
+void Widget::on_cb_cl_stateChanged(int arg1)
+{
+    auto t=ui->te_hex->toPlainText();
+    //C=>hex
+    if(arg1==Qt::Unchecked){
+        t=t.replace("{","").replace("}","").replace(",0x"," ").replace("0x","");
+    }else{
+        //hex=>C
+        t=t.replace(" ",",0x");
+        t="{0x"+t+"}";
+    }
+    ui->te_hex->setText(t);
 }

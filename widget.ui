@@ -11,20 +11,17 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>滑稽专用字符转换工具(30m)</string>
+   <string>滑稽专用字符转换工具</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>要转换的字符串</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="1" rowspan="2">
-    <widget class="QComboBox" name="cb_cs"/>
-   </item>
-   <item row="1" column="0" rowspan="2">
+   <item row="1" column="0" rowspan="2" colspan="2">
     <widget class="QTextEdit" name="te_org">
      <property name="html">
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -35,7 +32,10 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="1" column="2">
+    <widget class="QComboBox" name="cb_cs"/>
+   </item>
+   <item row="2" column="2">
     <widget class="QPushButton" name="btn_encode">
      <property name="text">
       <string>转换↓</string>
@@ -49,10 +49,17 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="cb_cl">
+     <property name="text">
+      <string>C语言数组</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
     <widget class="QTextEdit" name="te_hex"/>
    </item>
-   <item row="4" column="1">
+   <item row="4" column="2">
     <widget class="QPushButton" name="btn_hex">
      <property name="text">
       <string>转换↑</string>
@@ -66,13 +73,13 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="6" column="0">
+   <item row="6" column="0" colspan="2">
     <widget class="QTextEdit" name="te_url"/>
    </item>
-   <item row="6" column="1">
+   <item row="6" column="2">
     <widget class="QPushButton" name="btn_url">
      <property name="text">
-      <string>转换s↑</string>
+      <string>转换↑</string>
      </property>
     </widget>
    </item>
@@ -83,27 +90,27 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="7" column="1" rowspan="2">
+   <item row="8" column="0" colspan="2">
+    <widget class="QTextEdit" name="te_base64"/>
+   </item>
+   <item row="8" column="2">
     <widget class="QPushButton" name="btn_base64">
      <property name="text">
       <string>转换↑</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
-    <widget class="QTextEdit" name="te_base64"/>
-   </item>
-   <item row="9" column="0">
+   <item row="9" column="0" colspan="2">
     <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>Unicode</string>
+      <string>Unicode(UTF-16 小端模式)</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="0">
+   <item row="10" column="0" colspan="2">
     <widget class="QTextEdit" name="te_uni"/>
    </item>
-   <item row="10" column="1">
+   <item row="10" column="2">
     <widget class="QPushButton" name="btn_uni">
      <property name="text">
       <string>转换↑</string>
@@ -117,10 +124,10 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="12" column="0">
+   <item row="12" column="0" colspan="2">
     <widget class="QTextEdit" name="te_grep"/>
    </item>
-   <item row="12" column="1">
+   <item row="12" column="2">
     <widget class="QPushButton" name="btn_grep">
      <property name="text">
       <string>转换↑</string>
