@@ -12,7 +12,8 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
     for(const auto& a:QTextCodec::availableCodecs()){
-        ui->cb_cs->addItem(QString(a));
+        ui->cb_cs->addItem(a);
+//        qDebug()<<QString(a);
     }
 }
 
