@@ -29,8 +29,12 @@ private slots:
     void on_btn_md5_clicked();
 
     void on_cb_cl_stateChanged(int arg1);
+    void on_cb_sha_currentTextChanged(const QString &arg1);
+
 private:
     QTextCodec* get_select_charset();
+    //获取输入的数据
+    QByteArray get_input_data();
 private:
     Ui::Widget *ui;
 };

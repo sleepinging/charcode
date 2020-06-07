@@ -7,21 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>滑稽专用字符转换工具</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>要转换的字符串</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="2" colspan="2">
+   <item row="1" column="0" rowspan="2">
     <widget class="QTextEdit" name="te_org">
      <property name="html">
       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -32,10 +32,10 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="1" column="1">
     <widget class="QComboBox" name="cb_cs"/>
    </item>
-   <item row="2" column="2">
+   <item row="2" column="1" rowspan="2">
     <widget class="QPushButton" name="btn_encode">
      <property name="text">
       <string>转换↓</string>
@@ -49,89 +49,128 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="4" column="0" rowspan="2">
+    <widget class="QTextEdit" name="te_hex"/>
+   </item>
+   <item row="4" column="1">
     <widget class="QCheckBox" name="cb_cl">
      <property name="text">
       <string>C语言数组</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QTextEdit" name="te_hex"/>
-   </item>
-   <item row="4" column="2">
+   <item row="5" column="1">
     <widget class="QPushButton" name="btn_hex">
      <property name="text">
       <string>转换↑</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
       <string>URL</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0">
     <widget class="QTextEdit" name="te_url"/>
    </item>
-   <item row="6" column="2">
+   <item row="7" column="1">
     <widget class="QPushButton" name="btn_url">
      <property name="text">
       <string>转换↑</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="0">
+   <item row="8" column="0">
     <widget class="QLabel" name="label_4">
      <property name="text">
       <string>base64</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0" colspan="2">
+   <item row="9" column="0">
     <widget class="QTextEdit" name="te_base64"/>
    </item>
-   <item row="8" column="2">
+   <item row="9" column="1">
     <widget class="QPushButton" name="btn_base64">
      <property name="text">
       <string>转换↑</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="0" colspan="2">
+   <item row="10" column="0">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Unicode(UTF-16 小端模式)</string>
      </property>
     </widget>
    </item>
-   <item row="10" column="0" colspan="2">
+   <item row="11" column="0">
     <widget class="QTextEdit" name="te_uni"/>
    </item>
-   <item row="10" column="2">
+   <item row="11" column="1">
     <widget class="QPushButton" name="btn_uni">
      <property name="text">
       <string>转换↑</string>
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
+   <item row="12" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
       <string>MD5</string>
      </property>
     </widget>
    </item>
-   <item row="12" column="0" colspan="2">
+   <item row="13" column="0">
     <widget class="QTextEdit" name="te_md5"/>
    </item>
-   <item row="12" column="2">
+   <item row="13" column="1">
     <widget class="QPushButton" name="btn_md5">
      <property name="text">
       <string>转换↑</string>
      </property>
+    </widget>
+   </item>
+   <item row="14" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>SHA</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="0">
+    <widget class="QTextEdit" name="te_sha"/>
+   </item>
+   <item row="15" column="1">
+    <widget class="QComboBox" name="cb_sha">
+     <item>
+      <property name="text">
+       <string>Sha1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sha224</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sha256</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sha384</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sha512</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>
