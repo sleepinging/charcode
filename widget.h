@@ -26,7 +26,7 @@ private slots:
 
     void on_btn_uni_clicked();
 
-    void on_btn_grep_clicked();
+    void on_btn_md5_clicked();
 
     void on_cb_cl_stateChanged(int arg1);
 private:

@@ -5,6 +5,7 @@
 #include <QTextCodec>
 #include <QByteArray>
 #include <QMessageBox>
+#include <QCryptographicHash>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -30,6 +31,7 @@ void Widget::on_btn_encode_clicked()
     auto strUnicode= utf8->toUnicode(str1.toUtf8().data());
     auto qtc = get_select_charset();
     auto bs=qtc->fromUnicode(strUnicode);
+
     //HEX
     {
         if(!ui->cb_cl->isChecked()){
@@ -41,10 +43,27 @@ void Widget::on_btn_encode_clicked()
         }
     }
 
+    //url
     ui->te_url->setText(bs.toPercentEncoding());
+
+    //base64
     ui->te_base64->setText(bs.toBase64());
-    //grep
-    ui->te_grep->setText("\\x"+bs.toHex(' ').toUpper().split(' ').join("\\x"));
+
+    //md5
+    {
+        QString md5;
+        auto data=QCryptographicHash::hash(bs, QCryptographicHash::Md5);
+        auto hex=data.toHex();
+        //32位大写
+        ui->te_md5->setText(hex.toUpper());
+        //32位小写
+        ui->te_md5->append(hex);
+        //16位大写
+        ui->te_md5->append(hex.mid(8,16).toUpper());
+        //16位小写
+        ui->te_md5->append(hex.mid(8,16));
+    }
+
     //转unicode显示
     {
         QString us;
@@ -122,23 +141,9 @@ void Widget::on_btn_uni_clicked()
     ui->te_org->setText(tc->toUnicode(bb));
 }
 
-void Widget::on_btn_grep_clicked()
+void Widget::on_btn_md5_clicked()
 {
-    auto t=ui->te_grep->toPlainText();
-    auto hexs=t.split("\\x", QString::SkipEmptyParts);
-    QByteArray bs;
-    bool ok=false;
-    int num=0;
-    for(const auto& hexc:hexs){
-        num=hexc.toInt(&ok,16);
-        if(!ok){
-            QMessageBox::critical(this,"错误","字符 "+hexc);
-            return;
-        }
-        bs.append(num);
-    }
-    auto tc=get_select_charset();
-    ui->te_org->setText(tc->toUnicode(bs));
+
 }
 
 void Widget::on_cb_cl_stateChanged(int arg1)
